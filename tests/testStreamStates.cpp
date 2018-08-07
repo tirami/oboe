@@ -174,3 +174,26 @@ TEST_F(StreamStates, InputStreamStateIsStoppedAfterStopping){
 
     closeStream();
 }
+
+TEST_F(StreamStates, PausingAnAlreadyPausedStreamDoesNotChangeState){
+
+    // This is to reproduce a bug on O MR1 where calling requestPause on an already paused stream
+    // would cause it to go into the PAUSING state
+    // https://github.com/google/oboe/issues/65
+    openStream();
+
+    StreamState next = StreamState::Unknown;
+    auto r = mStream->requestStart();
+    EXPECT_EQ(r, Result::OK);
+    r = mStream->requestPause();
+    r = mStream->waitForStateChange(StreamState::Pausing, &next, kTimeoutInNanos);
+
+    EXPECT_EQ(r, Result::OK);
+    EXPECT_EQ(next, StreamState::Paused);
+
+    r = mStream->requestPause();
+    ASSERT_EQ(mStream->getState(), StreamState::Paused);
+
+    closeStream();
+
+}
