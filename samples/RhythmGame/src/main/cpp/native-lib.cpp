@@ -56,7 +56,7 @@ Java_com_google_oboe_sample_rhythmgame_GameSurfaceView_native_1onTouchInput(JNIE
                                                            jint event_type,
                                                            jlong time_since_boot_ms,
                                                            jint pixel_x, jint pixel_y) {
-    game->tap(time_since_boot_ms);
+    game->tap(time_since_boot_ms, pixel_y);
 }
 
 JNIEXPORT void JNICALL

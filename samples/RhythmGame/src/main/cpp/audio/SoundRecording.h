@@ -39,6 +39,7 @@ public:
     void resetPlayHead() { mReadFrameIndex = 0; };
     void setPlaying(bool isPlaying) { mIsPlaying = isPlaying; resetPlayHead(); };
     void setLooping(bool isLooping) { mIsLooping = isLooping; };
+    bool isPlaying() { return mIsPlaying; }
 
     static SoundRecording * loadFromAssets(AAssetManager *assetManager, const char * filename);
 

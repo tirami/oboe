@@ -38,7 +38,7 @@ public:
     void onSurfaceDestroyed();
     void onSurfaceChanged(int widthInPixels, int heightInPixels);
     void tick();
-    void tap(int64_t eventTimeAsUptime);
+    void tap(int64_t eventTimeAsUptime, int64_t pixelY);
 
     // Inherited from oboe::AudioStreamCallback
     DataCallbackResult
@@ -49,6 +49,14 @@ private:
     AudioStream *mAudioStream{nullptr};
     SoundRecording *mClap{nullptr};
     SoundRecording *mBackingTrack{nullptr};
+
+    SoundRecording *mPianoA{nullptr};
+    SoundRecording *mPianoB{nullptr};
+    SoundRecording *mPianoC{nullptr};
+    SoundRecording *mPianoD{nullptr};
+    SoundRecording *mPianoE{nullptr};
+    SoundRecording *mPianoF{nullptr};
+
     Mixer mMixer;
 
     LockFreeQueue<int64_t, kMaxQueueItems> mClapEvents;

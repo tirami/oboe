@@ -21,7 +21,6 @@
 #include <cstdint>
 
 class RenderableAudio {
-
 public:
     virtual ~RenderableAudio() = default;
     virtual void renderAudio(int16_t *audioData, int32_t numFrames) = 0;

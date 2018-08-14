@@ -3,4 +3,6 @@
 .externalNativeBuild/
 .idea
 build
-
+local.properties
+gradle
+gradle*

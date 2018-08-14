@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+#include <math.h>
 #include "Mixer.h"
 
 void Mixer::renderAudio(int16_t *audioData, int32_t numFrames) {
@@ -23,11 +24,22 @@ void Mixer::renderAudio(int16_t *audioData, int32_t numFrames) {
         audioData[j] = 0;
     }
 
+    float interferenceOffset;
+    int64_t ampSum;
+
     for (int i = 0; i < mNextFreeTrackIndex; ++i) {
         mTracks[i]->renderAudio(mixingBuffer, numFrames);
 
         for (int j = 0; j < numFrames * kChannelCount; ++j) {
-            audioData[j] += mixingBuffer[j];
+            ampSum = audioData[j] + mixingBuffer[j];
+
+            if ((ampSum > 32600) || (ampSum < -32600)){
+                interferenceOffset = 32600 / fabs(ampSum);
+                audioData[j] = int16_t(audioData[j] * interferenceOffset);
+                audioData[j] += int16_t(mixingBuffer[j] * interferenceOffset);
+            } else {
+                audioData[j] += mixingBuffer[j];
+            }
         }
     }
 }

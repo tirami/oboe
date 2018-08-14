@@ -29,7 +29,7 @@ void SoundRecording::renderAudio(int16_t *targetData, int32_t numFrames){
 
         for (int i = 0; i < numFrames; ++i) {
             for (int j = 0; j < mChannelCount; ++j) {
-                targetData[(i*mChannelCount)+j] = mData[(mReadFrameIndex*mChannelCount)+j];
+                targetData[(i*mChannelCount)+j] = int16_t(mData[(mReadFrameIndex*mChannelCount)+j]);
             }
 
             // Increment and handle wraparound
